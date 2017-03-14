@@ -26,18 +26,15 @@ public class CustomObjectMapper extends ObjectMapper {
 		super();
 		configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		logger.info("======================custom mapper initialized=============================");
 	}
 	
 	@Override
 	public String writeValueAsString(Object value) throws JsonProcessingException {
-		logger.info("======================custom mapper=============================");
 		return super.writeValueAsString(value);
 	}
 	
 	@Override
 	public void writeValue(JsonGenerator jgen, Object value) throws IOException, JsonGenerationException, JsonMappingException {
-		logger.info("======================custom mapper=============================");
 		super.writeValue(jgen, value);
 	}
 }

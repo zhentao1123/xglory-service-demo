@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+
+	<property name="appName" value="xglory-service-demo" />
+	<contextName>${appName}</contextName>
+
+	<!-- Tomcat Log Dir -->
+	<property name="logDir" value="/data/logs/${appName}" />
+	
+	<!-- Eclipse Log Dir
+	<property name="logDir" value="logs" />
+	 -->
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level %logger{0} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">        
+		<encoder>  
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder> 
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${logDir}/${appName}.%d{yyyy-MM-dd}.log</fileNamePattern>  
+            <maxHistory>30</maxHistory>  
+        </rollingPolicy>  
+    </appender>
+    
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+   		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize> 
+    </appender>
+	
+    <!-- 包目录定义日志级别 -->
+   	<!--  
+    <logger name="org.springframework" level="info"/>
+    <logger name="org.apache.commons.dbcp" level="info"/>
+     -->
+    <logger name="cn.xglory" level="debug">
+    	<appender-ref ref="ASYNC"/>
+    </logger>
+    
+    <root level="error">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

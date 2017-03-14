@@ -19,6 +19,9 @@
 	<java.version>1.7</java.version>
 	<spring.version>4.3.7.RELEASE</spring.version>
 	<jackson.version>2.8.7</jackson.version>
+	<slf4j.version>1.7.24</slf4j.version>
+	<logback.version>1.2.1</logback.version>
+	<log4jdbc.version>1.2</log4jdbc.version>
   </properties>
   
   
@@ -109,6 +112,39 @@
 		<version>14.0.1</version>
 	</dependency>
 	<!-- Common Eegin -->
+	
+	<!-- Logging Begin -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+		<version>${logback.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>log4j-over-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jcl-over-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jul-to-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.googlecode.log4jdbc</groupId>
+		<artifactId>log4jdbc</artifactId>
+		<version>${log4jdbc.version}</version>
+	</dependency>
+	<!-- Logging End -->
 	
 	<!-- Junit -->
 	<dependency>

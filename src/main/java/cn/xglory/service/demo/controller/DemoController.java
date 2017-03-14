@@ -1,5 +1,7 @@
 package cn.xglory.service.demo.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import cn.xglory.service.demo.controller.response.HelloRsp;
 @RequestMapping(value = "/service/", method = RequestMethod.POST)
 public class DemoController extends BaseServiceController {
 	
+	private static Log logger = LogFactory.getLog(DemoController.class);
+	
 	@RequestMapping(value = "hello")
 	@ResponseBody
 	public CommonRsp<HelloRsp> hello(@RequestBody CommonReq<HelloReq> req) throws Exception{
@@ -25,6 +29,8 @@ public class DemoController extends BaseServiceController {
 		CommonRsp<HelloRsp> rsp = new CommonRsp<HelloRsp>();
 		HelloRsp rspData = new HelloRsp(reqData.getWord() + "," + reqData.getName() + "!");
 		rsp.setData(rspData);
+		
+		logger.debug(rspData.getGreetings());
 		
 		return rsp;
 	}
