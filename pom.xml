@@ -18,6 +18,7 @@
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<java.version>1.7</java.version>
 	<spring.version>4.3.7.RELEASE</spring.version>
+	<jackson.version>2.8.7</jackson.version>
   </properties>
   
   
@@ -70,26 +71,6 @@
 	</dependency>
 	<!-- Spring End -->
 	
-	<!-- Web -->
-	<dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>2.5</version>
-	</dependency>
-	
-	<!-- Aspectj Bengin -->
-	<dependency>
-	    <groupId>org.aspectj</groupId>
-	    <artifactId>aspectjrt</artifactId>
-	    <version>1.8.10</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.aspectj</groupId>
-	    <artifactId>aspectjweaver</artifactId>
-	    <version>1.8.10</version>
-	</dependency>
-	<!-- Aspectj End -->
-	
 	<!-- Common Begin -->
 	<dependency>
 		<groupId>org.apache.commons</groupId>
@@ -137,6 +118,26 @@
 	    <scope>test</scope>
 	</dependency>
 	
+	<!-- Web -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<version>2.5</version>
+	</dependency>
+	
+	<!-- Aspectj Bengin -->
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	    <version>1.8.10</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjweaver</artifactId>
+	    <version>1.8.10</version>
+	</dependency>
+	<!-- Aspectj End -->
+	
 	<!-- dozer -->
 	<dependency>
 	    <groupId>net.sf.dozer</groupId>
@@ -147,6 +148,28 @@
 	    <groupId>net.sf.dozer</groupId>
 	    <artifactId>dozer-spring</artifactId>
 	    <version>5.5.1</version>
+	</dependency>
+	
+	<!-- Json -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.module</groupId>
+		<artifactId>jackson-module-jaxb-annotations</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.datatype</groupId>
+		<artifactId>jackson-datatype-json-org</artifactId>
+		<version>${jackson.version}</version>
 	</dependency>
   </dependencies>
   
