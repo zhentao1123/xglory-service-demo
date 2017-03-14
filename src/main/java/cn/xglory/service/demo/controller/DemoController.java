@@ -13,8 +13,8 @@ import cn.xglory.service.demo.controller.request.HelloReq;
 import cn.xglory.service.demo.controller.response.HelloRsp;
 
 @Controller
-@RequestMapping(value = "/service/")
-//@RequestMapping(value = "/service/", method = RequestMethod.POST)
+//@RequestMapping(value = "/service/")
+@RequestMapping(value = "/service/", method = RequestMethod.POST)
 public class DemoController extends BaseServiceController {
 	
 	@RequestMapping(value = "hello")

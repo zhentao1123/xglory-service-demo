@@ -5,6 +5,10 @@ import cn.xglory.service.common.base.BaseResponseData;
 public class HelloRsp extends BaseResponseData{
 	private String greetings;
 	
+	public HelloRsp() {
+		super();
+	}
+
 	public HelloRsp(String greetings) {
 		super();
 		this.greetings = greetings;

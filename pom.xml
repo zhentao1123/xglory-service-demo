@@ -9,8 +9,8 @@
   
   <packaging>war</packaging>
   
+  <name>xglory-service-demo</name>
   <version>0.0.1-SNAPSHOT</version>
-  <name>demo Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
   

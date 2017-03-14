@@ -7,6 +7,10 @@ public class HelloReq extends BaseRequestData{
 	private String name;
 	private String word;
 	
+	public HelloReq() {
+		super();
+	}
+	
 	public HelloReq(String name, String word) {
 		super();
 		this.name = name;
