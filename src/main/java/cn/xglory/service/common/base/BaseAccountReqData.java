@@ -1,6 +1,6 @@
 package cn.xglory.service.common.base;
 
-public class BaseAccountReqData {
+public class BaseAccountReqData extends BaseReqData{
 	private String accountName;
 	private String accountToken;
 	
