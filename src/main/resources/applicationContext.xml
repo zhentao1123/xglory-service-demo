@@ -15,4 +15,6 @@
 
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
+	<bean class="cn.xglory.service.util.spring.SpringUtils" />
+	
 </beans>

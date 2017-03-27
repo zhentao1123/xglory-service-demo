@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.xglory.service.common.base.CommonReq;
 import cn.xglory.service.common.base.CommonRsp;
+import cn.xglory.service.util.spring.SpringUtils;
 
 @Component
 @Aspect
@@ -85,7 +86,7 @@ public class ControllerAspect {
 		//处理参数
 		try{
 			req = (CommonReq<?>)args[0];
-			req.setMock(true);
+			//req.setMock(true);
 		}catch(Exception e){}
 		
 		//调用处理
