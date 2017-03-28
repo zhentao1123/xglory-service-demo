@@ -8,19 +8,29 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标注设置业务服务
+ * 标注设置Controller类或其中某方法关联的服务
  * @author zhangzhentao
  *
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface BizService {
+public @interface BizController {
 	
 	/**
-	 * The name of service
+	 * 业务实现类名
 	 */
-	String name() default "";
+	String serviceImplClass() default "";
 	
+	/**
+	 * 业务模拟类名
+	 */
+	String serviceMockClass() default "";
+	
+	/**
+	 * 业务方法名
+	 * @return
+	 */
+	String serviceMethodName() default "";
 }

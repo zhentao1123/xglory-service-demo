@@ -1,12 +1,12 @@
 package cn.xglory.service.demo.aop;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.junit.Test;
 
-import cn.xglory.service.common.annotation.BizService;
+import cn.xglory.service.common.annotation.BizController;
 import cn.xglory.service.demo.BaseTest;
-import cn.xglory.service.demo.service.mock.DemoServiceMock;
 import cn.xglory.service.util.spring.SpringUtils;
 
 public class ControllerAspectTest extends BaseTest {
@@ -22,9 +22,13 @@ public class ControllerAspectTest extends BaseTest {
 		System.out.println(bean!=null);
 		*/
 		
-		Map<String, Object> beanMap = SpringUtils.getContext().getBeansWithAnnotation(BizService.class);
+		Map<String, Object> beanMap = SpringUtils.getContext().getBeansWithAnnotation(BizController.class);
 		for(String key : beanMap.keySet()){
-			System.out.println(key);
+			//System.out.println(key);
+			Class clazz = beanMap.get(key).getClass();
+			//System.out.println(clazz.getName().split("\\$\\$")[0]);
+			BizController annotation = (BizController) clazz.getAnnotation(BizController.class);
+			System.out.println(annotation.serviceImplClass());
 		}
 		
 		
