@@ -1,29 +1,14 @@
 package cn.xglory.service.demo.aop;
 
-import java.lang.reflect.Method;
-import java.math.BigInteger;
-import java.util.Date;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.xglory.service.common.annotation.BizController;
-import cn.xglory.service.common.annotation.BizServiceImpl;
 import cn.xglory.service.common.aop.BaseControllerAspect;
-import cn.xglory.service.common.base.CommonReq;
-import cn.xglory.service.common.base.CommonRsp;
-import cn.xglory.service.util.spring.SpringUtils;
 
 @Component
 @Aspect
