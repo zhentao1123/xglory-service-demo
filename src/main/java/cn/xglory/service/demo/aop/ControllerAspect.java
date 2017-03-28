@@ -42,7 +42,7 @@ public class ControllerAspect extends BaseControllerAspect{
 	@Around("processControllerMethod()")
 	public Object aroundControllerMethod(ProceedingJoinPoint pjp)
 	{
-		return super.aroundControllerMethod(pjp);
+		return super.aroundControllerMethod(pjp, "cn.xglory.service.demo.service.impl.", "cn.xglory.service.demo.service.mock.");
 	}
 	
 	@Before("processControllerMethod()")

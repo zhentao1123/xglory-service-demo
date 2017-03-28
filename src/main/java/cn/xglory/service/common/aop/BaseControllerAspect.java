@@ -18,7 +18,7 @@ public class BaseControllerAspect {
 	
 	private static Log logger = LogFactory.getLog(BaseControllerAspect.class);
 	
-	protected Object aroundControllerMethod(ProceedingJoinPoint pjp)
+	protected Object aroundControllerMethod(ProceedingJoinPoint pjp, String defaultServiceImpPackage, String defaultServiceMockPackage)
 	{
 		long processBegin = new Date().getTime();
 		logger.debug("== aroundControllerMethod begin ==");
@@ -84,8 +84,6 @@ public class BaseControllerAspect {
 			//获取仅根据类名约定关系匹配的Service类名，作为没有标签情况的默认值；没有标签不项目中不能再定义同名类
 			String defaultServiceImplName = null;
 			String defaultServiceMockName = null;
-			String defaultServiceImpPackage = "cn.xglory.service.demo.service.impl.";
-			String defaultServiceMockPackage = "cn.xglory.service.demo.service.mock.";
 			String defaultServiceMethodName = pjp.getSignature().getName();
 			Method defaultServiceMethod = null;
 			try{
