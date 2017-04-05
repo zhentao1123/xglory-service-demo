@@ -59,13 +59,17 @@ public class BaseControllerAspect {
 		CommonRsp<Object> rsp = null;
 
 		//打印接口URL日志
-		String path = "";
-		String methodPath = "";
-		String classPath = "";
-		classPath = ((RequestMapping)targetClazz.getAnnotation(RequestMapping.class)).value()[0];
-		methodPath = ((RequestMapping)targetMethod.getAnnotation(RequestMapping.class)).value()[0];
-		path = classPath + methodPath;
-		logger.debug("path : " + path);
+		try{
+			String path = "";
+			String methodPath = "";
+			String classPath = "";
+			classPath = ((RequestMapping)targetClazz.getAnnotation(RequestMapping.class)).value()[0];
+			methodPath = ((RequestMapping)targetMethod.getAnnotation(RequestMapping.class)).value()[0];
+			path = classPath + methodPath;
+			logger.debug("path : " + path);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		//处理参数
 		try{
@@ -73,7 +77,10 @@ public class BaseControllerAspect {
 			if(null==req.isMock()){ //默认调用真实实现
 				req.setMock(false);
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			e.printStackTrace();
+			//TODO 封装固定的请求格式的错误
+		}
 		
 		//调用处理
 		try {
@@ -127,7 +134,11 @@ public class BaseControllerAspect {
 				//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
 				try{
 					service = getBeanListByAnnotationAndNameInSpring(BizServiceImpl.class, serviceSimpleName).get(0);
-				}catch(Exception e){}
+				}catch(Exception e){
+					e.printStackTrace();
+					//TODO 打印service获取失败的错误
+					throw e;
+				}
 			}
 			else//模拟实现
 			{
@@ -147,13 +158,21 @@ public class BaseControllerAspect {
 				//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
 				try{
 					service = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceSimpleName).get(0);
-				}catch(Exception e){}
+				}catch(Exception e){
+					e.printStackTrace();
+					//TODO 打印service获取失败的错误
+					throw e;
+				}
 			}
 			
 			//搜索匹配的Method
 			try{
 				serviceMethod = getClassMethod(service.getClass(), serviceMethodName, BizServiceMethod.class, null);
-			}catch(Exception e){}
+			}catch(Exception e){
+				e.printStackTrace();
+				//TODO 打印service method获取失败的错误
+				throw e;
+			}
 			
 			//调用服务
 			result = serviceMethod.invoke(service, req.getData());	
