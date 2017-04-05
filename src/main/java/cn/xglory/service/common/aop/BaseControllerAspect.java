@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.xglory.service.common.annotation.BizController;
 import cn.xglory.service.common.annotation.BizServiceImpl;
+import cn.xglory.service.common.annotation.BizServiceMethod;
 import cn.xglory.service.common.annotation.BizServiceMock;
 import cn.xglory.service.common.base.CommonReq;
 import cn.xglory.service.common.base.CommonRsp;
@@ -80,91 +81,75 @@ public class BaseControllerAspect {
 			//result = pjp.proceed(args);
 			//rsp = (CommonRsp<?>)result;
 			
-			String serviceImplName = null;
-			String serviceMockName = null;
-			String methodName = null;
-			Class serviceImplClass = null;
-			Class serviceMockClass = null;
-			Object serviceImpl = null;
-			Object serviceMock = null;
-			Method method = null;
-			//注解标注的Service实现类名
-			String annServiceImplName = null;
-			//注解标注的Service模拟类名
-			String annServiceMockName = null;
-			//注解标注的Service方法名
-			String annServiceMethodName = null;
-
+			//Controller类注解
+			BizController classBizController = null;
+			//Controller方法注解
+			BizController methodBizController = null;
+			
+			String serviceSimpleName = null;
+			Object service = null;
+			String serviceMethodName = null;
 			Method serviceMethod = null;
 			
-			//--搜索匹配的Service---------------------------
+			//--获取BizController注解---------------------------
 			{
 				//获取BizController标签指定的业务实现类及业务模拟类
-				BizController classBizController = null;
-				BizController methodBizController = null;
-				String serviceImplSimpleName = null;
-				String serviceMockSimpleName = null;
-				
 				try{
 					classBizController = (BizController)targetClazz.getAnnotation(BizController.class);
 				}catch(Exception e){}
 				try{
 					methodBizController = (BizController)targetMethod.getAnnotation(BizController.class);
 				}catch(Exception e){}
-				
-				//取Service实现类实例
-				{
-					if(null!=methodBizController){//从方法注解取
-						serviceImplSimpleName = methodBizController.serviceImplClass();
-					}else{
-						if(null!=classBizController){//从类注解取
-							serviceImplSimpleName = classBizController.serviceImplClass();
-						}else{//从目标类名取
-							serviceImplSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceImpl");
-						}
+			}
+			
+			//--获取Service执行方法名---------------------------
+			if(null!=methodBizController){//从方法注解取
+				serviceMethodName = methodBizController.serviceMethodName();
+			}else{
+				serviceMethodName = targetMethod.getName();
+			}
+			
+			//--获取ServiceSimpleName---------------------------
+			if(!req.isMock())//正式实现
+			{
+				if(null!=methodBizController){//从方法注解取
+					serviceSimpleName = methodBizController.serviceImplClass();
+				}else{
+					if(null!=classBizController){//从类注解取
+						serviceSimpleName = classBizController.serviceImplClass();
+					}else{//从目标类名取
+						serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceImpl");
 					}
-					try{
-						//有缺陷，但暂靠约定解决：带BizServiceImpl注解但受管bean必须避免同名，且以单例定义
-						serviceImpl = getBeanListByAnnotationAndNameInSpring(BizServiceImpl.class, serviceImplSimpleName).get(0);
-					}catch(Exception e){}
 				}
-				
-				//取Service模拟类实例
-				{
-					if(null!=methodBizController){//从方法注解取
-						serviceMockSimpleName = methodBizController.serviceMockClass();
-					}else{
-						if(null!=classBizController){//从类注解取
-							serviceMockSimpleName = classBizController.serviceMockClass();
-						}else{//从目标类名取
-							serviceMockSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceMock");
-						}
+			}
+			else//模拟实现
+			{
+				if(null!=methodBizController){//从方法注解取
+					serviceSimpleName = methodBizController.serviceMockClass();
+				}else{
+					if(null!=classBizController){//从类注解取
+						serviceSimpleName = classBizController.serviceMockClass();
+					}else{//从目标类名取
+						serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceMock");
 					}
-					try{
-						//有缺陷，但暂靠约定解决：带BizServiceImpl注解但受管bean必须避免同名，且以单例定义
-						serviceMock = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceMockSimpleName).get(0);
-					}catch(Exception e){}
 				}
 			}
 			
+			//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
+			try{
+				service = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceSimpleName).get(0);
+			}catch(Exception e){}
 			
 			//搜索匹配的Method
-			
-			
-			
+			try{
+				serviceMethod = getClassMethod(service.getClass(), serviceMethodName, BizServiceMethod.class, null);
+			}catch(Exception e){}
 			
 			//调用服务
-//			Object invokeResult = null;
-//			if(!req.isMock()){
-//				serviceClass = SpringUtils.getContext().getClassLoader().loadClass(defaultServiceImpPackage+serviceImplName);
-//			}else{
-//				serviceClass = SpringUtils.getContext().getClassLoader().loadClass(defaultServiceMockPackage+serviceMockName);
-//			}
-//			serviceMethod = getClassMethod(serviceClass, defaultServiceMethodName, null);
-//			invokeResult = serviceMethod.invoke(SpringUtils.getBean(serviceClass), req.getData());
+			result = serviceMethod.invoke(service, req.getData());	
 			
 			rsp = new CommonRsp<Object>();
-//			rsp.setData(invokeResult);;
+			rsp.setData(result);;
 			rsp.init4Succeed();
 			
 		} catch (Throwable e) {
@@ -208,23 +193,37 @@ public class BaseControllerAspect {
 	}
 	
 	/**
-	 * 根据方法名（和参数类型）获取类中的方法
-	 * @param clazz
-	 * @param methodName
-	 * @param parameterTypes
+	 * 根据方法名（和参数类型）获取类中的方法;若同名优先取匹配注释的方法
+	 * @param clazz 目标类
+	 * @param methodName 方法名
+	 * @param annotation 可选的匹配注释
+	 * @param parameterTypes 可选的匹配方法参数
 	 * @return
 	 */
-	private Method getClassMethod(Class clazz, String methodName, Class... parameterTypes){
+	private Method getClassMethod(Class clazz, String methodName, Class annotation, Class... parameterTypes){
 		Method method = null;
 		try{
 			if(null!=parameterTypes){
 				method = clazz.getMethod(methodName, parameterTypes);
 			}else{
 				Method[] methods = clazz.getMethods();
+				List<Method> matchNameMethods = new ArrayList<Method>();
 				for(Method method_ : methods){
 					if(method_.getName().equalsIgnoreCase(methodName)){
-						method = method_;
-						break;
+						matchNameMethods.add(method_);
+					}
+				}
+				if(matchNameMethods.size()>1){
+					if(annotation!=null){
+						for(Method method_ : matchNameMethods){
+							Object ann = method_.getAnnotation(annotation);
+							if(null!=ann){
+								method = method_;
+							}
+						}
+					}
+					if(method==null){
+						method = matchNameMethods.get(0);
 					}
 				}
 			}
