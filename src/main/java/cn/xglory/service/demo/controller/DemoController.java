@@ -14,7 +14,7 @@ import cn.xglory.service.demo.controller.request.HelloReq;
 import cn.xglory.service.demo.controller.response.HelloRsp;
 
 @Controller
-@RequestMapping(value = "/service/", method = RequestMethod.POST)
+@RequestMapping(value = "/service/demo/", method = RequestMethod.POST)
 @BizController(serviceImplClass = "DemoServiceImpl", serviceMockClass = "DemoServiceMock")
 public class DemoController extends BaseServiceController {
 	

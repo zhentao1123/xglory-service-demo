@@ -28,7 +28,7 @@ public class BaseControllerAspect {
 	private static Log logger = LogFactory.getLog(BaseControllerAspect.class);
 	
 	@SuppressWarnings("unchecked")
-	protected Object aroundControllerMethod(ProceedingJoinPoint pjp, String defaultServiceImpPackage, String defaultServiceMockPackage)
+	protected Object aroundControllerMethod(ProceedingJoinPoint pjp)
 	{
 		logger.debug("== aroundControllerMethod begin ==");
 		long processBegin = new Date().getTime();
@@ -58,7 +58,6 @@ public class BaseControllerAspect {
 		CommonReq<Object> req = null;
 		CommonRsp<Object> rsp = null;
 
-		
 		//打印接口URL日志
 		String path = "";
 		String methodPath = "";
@@ -112,33 +111,44 @@ public class BaseControllerAspect {
 			//--获取ServiceSimpleName---------------------------
 			if(!req.isMock())//正式实现
 			{
-				if(null!=methodBizController){//从方法注解取
+				//从方法注解取
+				if(null!=methodBizController){
 					serviceSimpleName = methodBizController.serviceImplClass();
-				}else{
-					if(null!=classBizController){//从类注解取
-						serviceSimpleName = classBizController.serviceImplClass();
-					}else{//从目标类名取
-						serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceImpl");
-					}
 				}
+				//从类注解取
+				if(StringUtils.isBlank(serviceSimpleName) && null!=classBizController){
+					serviceSimpleName = classBizController.serviceImplClass();
+				}
+				//从目标类名取
+				if(StringUtils.isBlank(serviceSimpleName)){
+					serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceImpl");
+				}
+				
+				//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
+				try{
+					service = getBeanListByAnnotationAndNameInSpring(BizServiceImpl.class, serviceSimpleName).get(0);
+				}catch(Exception e){}
 			}
 			else//模拟实现
 			{
-				if(null!=methodBizController){//从方法注解取
+				//从方法注解取
+				if(null!=methodBizController){
 					serviceSimpleName = methodBizController.serviceMockClass();
-				}else{
-					if(null!=classBizController){//从类注解取
-						serviceSimpleName = classBizController.serviceMockClass();
-					}else{//从目标类名取
-						serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceMock");
-					}
 				}
+				//从类注解取
+				if(StringUtils.isBlank(serviceSimpleName) && null!=classBizController){
+					serviceSimpleName = classBizController.serviceMockClass();
+				}
+				//从目标类名取
+				if(StringUtils.isBlank(serviceSimpleName)){
+					serviceSimpleName = targetClazz.getSimpleName().replace("Controller", "ServiceMock");
+				}
+				
+				//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
+				try{
+					service = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceSimpleName).get(0);
+				}catch(Exception e){}
 			}
-			
-			//有缺陷，但暂靠约定解决：带BizServiceImpl、BizServiceMock注解的受管bean必须避免同名，且以单例定义
-			try{
-				service = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceSimpleName).get(0);
-			}catch(Exception e){}
 			
 			//搜索匹配的Method
 			try{
@@ -184,7 +194,7 @@ public class BaseControllerAspect {
 		Map<String, Object> classes = SpringUtils.getContext().getBeansWithAnnotation(annotation);
 		if(null!=classes && !classes.isEmpty()){
 			for(String className : classes.keySet()){
-				if(className.equals(classSimpleName)){
+				if(className.equalsIgnoreCase(classSimpleName)){
 					beanList.add(classes.get(className));
 				}
 			}
@@ -213,12 +223,13 @@ public class BaseControllerAspect {
 						matchNameMethods.add(method_);
 					}
 				}
-				if(matchNameMethods.size()>1){
+				if(matchNameMethods.size()>0){
 					if(annotation!=null){
 						for(Method method_ : matchNameMethods){
 							Object ann = method_.getAnnotation(annotation);
 							if(null!=ann){
 								method = method_;
+								break;
 							}
 						}
 					}
