@@ -17,7 +17,10 @@ public class ControllerAspect extends BaseControllerAspect{
 	/**
 	 * the execution of any method defined in the controller package or a sub_package
 	 */
-	@Pointcut("execution(* cn.xglory.service.demo.controller..*.*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	//高效模式(包目录匹配，限定接口controller层包目录，但BizController注释非必须)
+	//@Pointcut("execution(* cn.xglory.service.demo.controller..*.*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	//通用模式(注释匹配，不限定接口controller层包目录，但BizController注释必须)
+	@Pointcut("@annotation(cn.xglory.service.common.annotation.BizController)")
 	public void processControllerMethod() {}
 	
 	/**
