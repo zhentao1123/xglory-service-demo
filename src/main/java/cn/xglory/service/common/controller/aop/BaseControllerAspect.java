@@ -1,4 +1,4 @@
-package cn.xglory.service.common.aop;
+package cn.xglory.service.common.controller.aop;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -15,12 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.xglory.service.common.annotation.BizController;
-import cn.xglory.service.common.annotation.BizServiceImpl;
-import cn.xglory.service.common.annotation.BizServiceMethod;
-import cn.xglory.service.common.annotation.BizServiceMock;
-import cn.xglory.service.common.base.CommonReq;
-import cn.xglory.service.common.base.CommonRsp;
+import cn.xglory.service.common.controller.annotation.BizController;
+import cn.xglory.service.common.controller.annotation.BizServiceImpl;
+import cn.xglory.service.common.controller.annotation.BizServiceMethod;
+import cn.xglory.service.common.controller.annotation.BizServiceMock;
+import cn.xglory.service.common.controller.base.CommonReq;
+import cn.xglory.service.common.controller.base.CommonRsp;
 import cn.xglory.service.util.spring.SpringUtils;
 
 public class BaseControllerAspect {

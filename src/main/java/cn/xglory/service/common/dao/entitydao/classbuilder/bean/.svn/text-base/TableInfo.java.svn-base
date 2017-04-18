@@ -1,0 +1,55 @@
+package cn.xglory.framework.dao.baseentitydao.classbuilder.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TableInfo{
+	//表名
+	private String name;
+	//主键信息
+	private ColumnInfo pk;
+	//表字段信息
+	private List<ColumnInfo> columnInfos;
+	//表字段对应Java类型import引用类全路径（去重）
+	private List<String> javaClasses = new ArrayList<String>();
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public ColumnInfo getPk() {
+		return pk;
+	}
+	public void setPk(ColumnInfo pk) {
+		this.pk = pk;
+	}
+	public List<ColumnInfo> getColumns() {
+		return columnInfos;
+	}
+	public void setColumns(List<ColumnInfo> columnInfos) {
+		//处理
+		buildImportClasses(columnInfos);
+		this.columnInfos = columnInfos;
+	}
+	public List<String> getJavaClasses() {
+		return javaClasses;
+	}
+	public void setJavaClasses(List<String> javaClasses) {
+		this.javaClasses = javaClasses;
+	}
+	
+	/**
+	 * 构造import所需列表（去重）
+	 * @param columnInfos
+	 */
+	private void buildImportClasses(List<ColumnInfo> columnInfos){
+		for(ColumnInfo field : columnInfos){
+			String javaClass = field.getJavaClass();
+			if(!this.javaClasses.contains(javaClass) && !javaClass.equals("")){
+				this.javaClasses.add(javaClass);
+			}
+		}
+	}
+}

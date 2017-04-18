@@ -1,6 +1,6 @@
 package cn.xglory.service.demo.controller.response;
 
-import cn.xglory.service.common.base.BaseRspData;
+import cn.xglory.service.common.controller.base.BaseRspData;
 
 public class HelloRsp extends BaseRspData{
 	private String greetings;

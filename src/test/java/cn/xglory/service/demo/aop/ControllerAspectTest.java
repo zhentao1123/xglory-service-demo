@@ -1,11 +1,10 @@
 package cn.xglory.service.demo.aop;
 
-import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.junit.Test;
 
-import cn.xglory.service.common.annotation.BizController;
+import cn.xglory.service.common.controller.annotation.BizController;
 import cn.xglory.service.demo.BaseTest;
 import cn.xglory.service.util.spring.SpringUtils;
 

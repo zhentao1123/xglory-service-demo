@@ -1,4 +1,4 @@
-package cn.xglory.service.common.annotation;
+package cn.xglory.service.common.controller.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -1,4 +1,4 @@
-package cn.xglory.service.common.annotation;
+package cn.xglory.service.common.controller.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标注设置业务服务
+ * 标注设置业务服务模拟类
  * @author zhangzhentao
  *
  */
@@ -16,11 +16,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface BizService {
-	
-	/**
-	 * The name of service
-	 */
-	String name() default "";
-	
+public @interface BizServiceMock {
+
 }

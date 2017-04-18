@@ -68,6 +68,11 @@
 		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-test</artifactId>
 	    <version>${spring.version}</version>
@@ -166,6 +171,20 @@
 		<version>2.5</version>
 	</dependency>
 	
+	<!-- dbcp -->
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.2.2</version>
+	</dependency>
+	
+	<!-- mysql jdbc driver -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.13</version>
+	</dependency>
+	
 	<!-- Aspectj Bengin -->
 	<dependency>
 	    <groupId>org.aspectj</groupId>
@@ -218,6 +237,14 @@
 	    <groupId>cglib</groupId>
 	    <artifactId>cglib</artifactId>
 	    <version>3.2.5</version>
+	</dependency>
+	
+	<!-- velocity -->
+	<dependency>
+		<groupId>org.apache.velocity</groupId>
+		<artifactId>velocity</artifactId>
+		<version>1.7</version>
+		<optional>true</optional>
 	</dependency>
 	
   </dependencies>

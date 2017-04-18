@@ -1,0 +1,29 @@
+package $!{info.packagePath};
+
+import cn.xglory.framework.dao.baseentitydao.BaseEntity;
+import cn.xglory.framework.dao.baseentitydao.annotation.Column;
+import cn.xglory.framework.dao.baseentitydao.annotation.Table;
+
+#foreach($ic in $info.infoValue.javaClasses)
+import $ic;
+#end 
+
+@Table(name="$!{info.infoValue.name}")
+public class $!{info.className} extends BaseEntity{
+
+#foreach($col in $info.infoValue.columns)
+	@Column(comment="$!{col.comment}", field="$!{col.field}"#if($col.pk), pk=true#end, type="$!{col.type}", length="$!{col.length}"#if($col.require), require=true#end)
+	private $col.javaClassName $col.field;
+	
+#end 
+#foreach($col in $info.infoValue.columns)
+	public void set$!{col.fieldUpperCase}($!{col.javaClassName} $!{col.field}){
+		this.$!{col.field} = $!{col.field};
+	}
+	
+	public $!{col.javaClassName} get$!{col.fieldUpperCase}(){
+		return this.$!{col.field};
+	}
+	
+#end
+}

@@ -1,4 +1,4 @@
-package cn.xglory.service.common.base;
+package cn.xglory.service.common.controller.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.xglory.service.common.annotation.BizController;
-import cn.xglory.service.common.base.BaseServiceController;
-import cn.xglory.service.common.base.CommonReq;
-import cn.xglory.service.common.base.CommonRsp;
+import cn.xglory.service.common.controller.annotation.BizController;
+import cn.xglory.service.common.controller.base.BaseServiceController;
+import cn.xglory.service.common.controller.base.CommonReq;
+import cn.xglory.service.common.controller.base.CommonRsp;
 import cn.xglory.service.demo.controller.request.HelloReq;
 import cn.xglory.service.demo.controller.response.HelloRsp;
 

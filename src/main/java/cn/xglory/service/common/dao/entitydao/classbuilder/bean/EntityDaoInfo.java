@@ -1,0 +1,25 @@
+package cn.xglory.service.common.dao.entitydao.classbuilder.bean;
+
+public class EntityDaoInfo {
+	private String entityPackagePath;
+	private String entityName;
+	
+	public EntityDaoInfo(String entityPackagePath, String entityName) {
+		super();
+		this.entityPackagePath = entityPackagePath;
+		this.entityName = entityName;
+	}
+	
+	public String getEntityPackagePath() {
+		return entityPackagePath;
+	}
+	public void setEntityPackagePath(String entityPackagePath) {
+		this.entityPackagePath = entityPackagePath;
+	}
+	public String getEntityName() {
+		return entityName;
+	}
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+}

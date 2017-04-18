@@ -1,4 +1,4 @@
-package cn.xglory.service.common.aop;
+package cn.xglory.service.common.controller.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -7,8 +7,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
-import cn.xglory.service.common.aop.BaseControllerAspect;
 
 @Component
 @Aspect
@@ -20,7 +18,7 @@ public class CommControllerAspect extends BaseControllerAspect{
 	//高效模式(包目录匹配，限定接口controller层包目录，但BizController注释非必须)
 	//@Pointcut("execution(* cn.xglory.service.demo.controller..*.*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
 	//通用模式(注释匹配，不限定接口controller层包目录，但BizController注释必须)
-	@Pointcut("@annotation(cn.xglory.service.common.annotation.BizController)")
+	@Pointcut("@annotation(cn.xglory.service.common.controller.annotation.BizController)")
 	public void processControllerMethod() {}
 	
 	/**

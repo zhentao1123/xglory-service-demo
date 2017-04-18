@@ -1,6 +1,6 @@
 package cn.xglory.service.demo.controller.request;
 
-import cn.xglory.service.common.base.BaseAccountReqData;
+import cn.xglory.service.common.controller.base.BaseAccountReqData;
 
 public class HelloReq extends BaseAccountReqData{
 	
