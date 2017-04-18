@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd ">
+    
+    <!-- 读库连接池配置 -->
+	<bean id="poolDataSource_read" abstract="true">
+		<property name="defaultAutoCommit" value="false" />				<!-- 事务自动提交设置 -->
+		<property name="defaultReadOnly" value="true" />				<!-- 读库默认只读 -->
+		
+		<property name="initialSize" value="20"/>  						<!-- 初始化连接数量 -->
+		<property name="minIdle" value="20"/>  							<!-- 最小等待连接中的数量,设 0 为没有限制 -->
+		<property name="maxIdle" value="20" />							<!-- 最大等待连接中的数量,设 0 为没有限制 -->
+		<property name="maxActive" value="20"/>  						<!-- 连接池的最大数据库连接数。设为0表示无限制。 -->
+        <property name="maxWait" value="1000"/>  						<!-- 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。 -->
+        
+        <property name="removeAbandoned" value="true"/>  				<!-- 是否自动回收超时连接 -->
+        <property name="removeAbandonedTimeout" value="300000"/>  		<!-- 自我中断时间秒 -->
+        
+        <property name="minEvictableIdleTimeMillis" value="-1"/>  		<!-- 连接的超时时间，默认为半小时。-->
+		<property name="numTestsPerEvictionRun" value="1" />			<!-- 过期时循环测试多少次（0 就相当于关闭定时器） -->
+        <property name="timeBetweenEvictionRunsMillis" value="2880000"/><!-- 运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务。 MySql8小时 -->
+    <!--  <property name="validationInterval" value="0"/>   			检查连接死活的时间间隔（单位：毫妙） 0以下的话不检查。默认是0。
+         -->
+     <!--  <property name="jmxEnabled" value="true"/>  --> 					<!-- 注册池JMX。的默认值是true。-->
+        
+        <property name="testWhileIdle" value="false"/>  				<!-- 默认值是false,当连接池中的空闲连接是否有效 -->
+        <property name="testOnBorrow" value="true"/> 					<!-- 默认值是true，当从连接池取连接时，验证这个连接是否有效 -->
+        <property name="testOnReturn" value="false"/>  					<!-- 默认值是flase,当从把该连接放回到连接池的时，验证这个连接是否有效 -->
+        <property name="validationQuery" value="select 1"/>  			<!-- 一条sql语句，用来验证数据库连接是否正常。这条语句必须是一个查询模式，并至少返回一条数据。可以为任何可以验证数据库连接是否正常的sql -->
+        
+        <property name="logAbandoned" value="true"/>  					<!-- 是否记录中断事件， 默认为 false -->
+        
+		<!--
+			这些拦截器将被插入到链中的一个java.sql.Connection对象的操作都是以拦截器。默认值是空的。
+			预定义的拦截器：
+             org.apache.tomcat.jdbc.pool.interceptor.ConnectionState - 跟踪自动提交，只读目录和事务隔离级别。
+             org.apache.tomcat.jdbc.pool.interceptor.tatementFinalizer - 跟踪打开的语句，并关闭连接时返回到池中。
+        -->
+		<!--  <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"/>  
+		   -->
+		
+	</bean> 
+	
+	
+	<!-- 写库连接池配置 -->
+	<bean id="poolDataSource_write"  abstract="true">
+		<property name="defaultAutoCommit" value="false" />				<!-- 事务自动提交设置 -->
+		<property name="defaultReadOnly" value="false" />				<!-- 写库非默认只读 -->
+		
+		<property name="initialSize" value="5"/>  						<!-- 初始化连接数量 -->
+		<property name="minIdle" value="5"/>  							<!-- 最小等待连接中的数量,设 0 为没有限制 -->
+		<property name="maxIdle" value="5" />							<!-- 最大等待连接中的数量,设 0 为没有限制 -->
+		<property name="maxActive" value="5"/>  						<!-- 连接池的最大数据库连接数。设为0表示无限制。 -->
+        <property name="maxWait" value="2000"/>  						<!-- 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。 -->
+        
+        <property name="removeAbandoned" value="true"/>  				<!-- 是否自动回收超时连接 -->
+        <property name="removeAbandonedTimeout" value="300000"/>  		<!-- 自我中断时间秒 -->
+        
+        <property name="minEvictableIdleTimeMillis" value="-1"/>  	<!-- 连接的超时时间，默认为半小时。-->
+        <property name="numTestsPerEvictionRun" value="1" />			<!-- 过期时循环测试多少次（0 就相当于关闭定时器） -->
+        <property name="timeBetweenEvictionRunsMillis" value="2880000"/>  <!-- 运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务。 -->
+      <!--   <property name="validationInterval" value="30000"/>   -->			<!-- 检查连接死活的时间间隔（单位：毫妙） 0以下的话不检查。默认是0。 -->
+        
+       <!--  <property name="jmxEnabled" value="true"/> -->  					<!-- 注册池JMX。的默认值是true。-->
+        
+        <property name="testWhileIdle" value="false"/>  				<!-- 默认值是false,当连接池中的空闲连接是否有效 -->
+        <property name="testOnBorrow" value="true"/> 					<!-- 默认值是true，当从连接池取连接时，验证这个连接是否有效 -->
+        <property name="testOnReturn" value="false"/>  					<!-- 默认值是flase,当从把该连接放回到连接池的时，验证这个连接是否有效 -->
+        <property name="validationQuery" value="select 1"/>  			<!-- 一条sql语句，用来验证数据库连接是否正常。这条语句必须是一个查询模式，并至少返回一条数据。可以为任何可以验证数据库连接是否正常的sql -->
+        
+        <property name="logAbandoned" value="true"/>  					<!-- 是否记录中断事件， 默认为 false -->
+        
+		<!--
+			这些拦截器将被插入到链中的一个java.sql.Connection对象的操作都是以拦截器。默认值是空的。
+			预定义的拦截器：
+             org.apache.tomcat.jdbc.pool.interceptor.ConnectionState - 跟踪自动提交，只读目录和事务隔离级别。
+             org.apache.tomcat.jdbc.pool.interceptor.tatementFinalizer - 跟踪打开的语句，并关闭连接时返回到池中。
+        -->
+		<!-- <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"/>  
+	 --></bean>
+ 	
+ </beans>
