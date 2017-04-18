@@ -1,4 +1,4 @@
-package cn.xglory.service.demo.aop;
+package cn.xglory.service.common.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -12,7 +12,7 @@ import cn.xglory.service.common.aop.BaseControllerAspect;
 
 @Component
 @Aspect
-public class ControllerAspect extends BaseControllerAspect{
+public class CommControllerAspect extends BaseControllerAspect{
 	
 	/**
 	 * the execution of any method defined in the controller package or a sub_package

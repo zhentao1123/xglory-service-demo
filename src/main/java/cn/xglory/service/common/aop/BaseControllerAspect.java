@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.xglory.service.common.annotation.BizController;
@@ -25,7 +25,7 @@ import cn.xglory.service.util.spring.SpringUtils;
 
 public class BaseControllerAspect {
 	
-	private static Log logger = LogFactory.getLog(BaseControllerAspect.class);
+	private static Logger logger = LoggerFactory.getLogger("BaseControllerAspect");
 	
 	@SuppressWarnings("unchecked")
 	protected Object aroundControllerMethod(ProceedingJoinPoint pjp)
@@ -196,10 +196,6 @@ public class BaseControllerAspect {
 		
 		logger.debug("== aroundControllerMethod end ==");
 		return rsp;
-	}
-	
-	public static void main(String[] args){
-		System.out.println(BaseControllerAspect.class.getName());
 	}
 	
 	/**
