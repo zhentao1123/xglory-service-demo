@@ -2,6 +2,7 @@ package cn.xglory.service.common.dao.entitydao.classbuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,6 +32,7 @@ public class SqlHelper {
 	static final String USERNAME = "root";
 	static final String PASSWORD = "123456";
 	static final String DB_NAME = "db1";
+	static final String STR_ENCODE = "UTF-8";
 	
 	private Connection conn = null;
 	
@@ -101,7 +103,11 @@ public class SqlHelper {
 				columnInfo.setType(type.substring(0, type.indexOf("(")));
 				columnInfo.setLength(type.substring(type.indexOf("(")+1, type.indexOf(")")));
 			}
-			columnInfo.setComment(rs1.getString("Comment"));
+			String comment = rs1.getString("Comment");
+			try {
+				comment = new String(comment.getBytes(STR_ENCODE));
+			} catch (UnsupportedEncodingException e) {}
+			columnInfo.setComment(comment);
 			columnInfo.setJavaClass(rsmd.getColumnClassName(i));
 			columnInfo.setPk("PRI".equals(rs1.getString("Key")));
 			columnInfo.setrequire(!"YES".equals(rs1.getString("Null")));
