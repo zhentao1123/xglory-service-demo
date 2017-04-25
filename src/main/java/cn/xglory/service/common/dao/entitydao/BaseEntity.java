@@ -13,4 +13,20 @@ public class BaseEntity {
 			return "";
 		}
 	}
+	
+	public java.sql.Date getSqlDate(java.util.Date date){
+		if(null!=date){
+			return new java.sql.Date(date.getTime());
+		}else{
+			return null;
+		}
+	}
+	
+	public java.sql.Timestamp getSqlTimestamp(java.util.Date date){
+		if(null!=date){
+			return new java.sql.Timestamp(date.getTime());
+		}else{
+			return null;
+		}
+	}
 }

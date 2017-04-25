@@ -14,7 +14,7 @@ import cn.xglory.service.common.dao.entitydao.classbuilder.bean.ColumnInfo;
 import cn.xglory.service.common.dao.entitydao.classbuilder.bean.EntityValue;
 
 public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements EntityDao<E>{
-
+	
 	public E getEntityById(int id) throws Exception {
 		String sql = "SELECT * FROM `" + getTableName() + "` WHERE id = ?;";
 //System.out.println("Select Sql:"+sql);
