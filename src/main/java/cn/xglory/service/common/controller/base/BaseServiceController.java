@@ -3,8 +3,8 @@ package cn.xglory.service.common.controller.base;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Bob
  *
  */
-public abstract class BaseServiceController {
+public class BaseServiceController {
 	
-	private static Log logger = LogFactory.getLog(BaseServiceController.class);
+	private static Logger logger = LoggerFactory.getLogger(BaseServiceController.class);
 	
 	@ExceptionHandler({Exception.class})  
 	@ResponseBody
