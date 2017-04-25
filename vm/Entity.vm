@@ -1,8 +1,8 @@
 package $!{info.packagePath};
 
-import cn.xglory.framework.dao.baseentitydao.BaseEntity;
-import cn.xglory.framework.dao.baseentitydao.annotation.Column;
-import cn.xglory.framework.dao.baseentitydao.annotation.Table;
+import cn.xglory.service.common.dao.entitydao.BaseEntity;
+import cn.xglory.service.common.dao.entitydao.annotation.Column;
+import cn.xglory.service.common.dao.entitydao.annotation.Table;
 
 #foreach($ic in $info.infoValue.javaClasses)
 import $ic;

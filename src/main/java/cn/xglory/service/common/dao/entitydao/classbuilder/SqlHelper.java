@@ -19,12 +19,18 @@ import cn.xglory.service.common.dao.entitydao.classbuilder.bean.ColumnInfo;
 import cn.xglory.service.common.dao.entitydao.classbuilder.bean.TableInfo;
 
 public class SqlHelper {
-	
+	/*
 	private String DRIVER = ConfigReader.readProperty("jdbc.driver");
 	private String CONN_URL = ConfigReader.readProperty("jdbc.url") ;
 	private String USERNAME = ConfigReader.readProperty("jdbc.username");
 	private String PASSWORD = ConfigReader.readProperty("jdbc.password");
 	private String DB_NAME = ConfigReader.readProperty("db.name");
+	*/
+	static final String DRIVER = "org.gjt.mm.mysql.Driver";
+	static final String CONN_URL = "jdbc:mysql://localhost:3306/db1?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&maxReconnects=2";
+	static final String USERNAME = "root";
+	static final String PASSWORD = "123456";
+	static final String DB_NAME = "db1";
 	
 	private Connection conn = null;
 	
