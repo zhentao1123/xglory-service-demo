@@ -21,6 +21,7 @@ import cn.xglory.service.common.controller.annotation.BizServiceMethod;
 import cn.xglory.service.common.controller.annotation.BizServiceMock;
 import cn.xglory.service.common.controller.base.CommonReq;
 import cn.xglory.service.common.controller.base.CommonRsp;
+import cn.xglory.service.common.exception.BaseServiceException;
 import cn.xglory.service.util.spring.SpringUtils;
 
 public class BaseControllerAspect {
@@ -79,7 +80,7 @@ public class BaseControllerAspect {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			//TODO 封装固定的请求格式的错误
+			throw BaseServiceException.buildParamErr();
 		}
 		
 		//调用处理
@@ -136,8 +137,7 @@ public class BaseControllerAspect {
 					service = getBeanListByAnnotationAndNameInSpring(BizServiceImpl.class, serviceSimpleName).get(0);
 				}catch(Exception e){
 					e.printStackTrace();
-					//TODO 打印service获取失败的错误
-					throw e;
+					throw new BaseServiceException(BaseServiceException.CODE_COMM_FAIL, "获取Service失败");
 				}
 			}
 			else//模拟实现
@@ -160,8 +160,7 @@ public class BaseControllerAspect {
 					service = getBeanListByAnnotationAndNameInSpring(BizServiceMock.class, serviceSimpleName).get(0);
 				}catch(Exception e){
 					e.printStackTrace();
-					//TODO 打印service获取失败的错误
-					throw e;
+					throw new BaseServiceException(BaseServiceException.CODE_COMM_FAIL, "获取模拟Service失败");
 				}
 			}
 			
@@ -170,8 +169,7 @@ public class BaseControllerAspect {
 				serviceMethod = getClassMethod(service.getClass(), serviceMethodName, BizServiceMethod.class, null);
 			}catch(Exception e){
 				e.printStackTrace();
-				//TODO 打印service method获取失败的错误
-				throw e;
+				throw new BaseServiceException(BaseServiceException.CODE_COMM_FAIL, "匹配Service方法失败");
 			}
 			
 			//调用服务
@@ -183,7 +181,7 @@ public class BaseControllerAspect {
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
-			//封装固定异常返回 TODO
+			throw new BaseServiceException(BaseServiceException.CODE_COMM_FAIL, "AOP调用失败");
 		}
 		
 		//处理返回值
