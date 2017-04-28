@@ -112,7 +112,8 @@ public class BaseControllerAspect {
 			//--获取Service执行方法名---------------------------
 			if(null!=methodBizController){//从方法注解取
 				serviceMethodName = methodBizController.serviceMethodName();
-			}else{
+			}
+			if(StringUtils.isBlank(serviceMethodName)){
 				serviceMethodName = targetMethod.getName();
 			}
 			
@@ -173,7 +174,11 @@ public class BaseControllerAspect {
 			}
 			
 			//调用服务
-			result = serviceMethod.invoke(service, req.getData());	
+			if(null!=req.getData()){
+				result = serviceMethod.invoke(service, req.getData());
+			}else{
+				result = serviceMethod.invoke(service);
+			}
 			
 			rsp = new CommonRsp<Object>();
 			rsp.setData(result);;
