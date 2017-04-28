@@ -1,6 +1,7 @@
 package cn.xglory.service.util.jackson;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +27,10 @@ public class CustomObjectMapper extends ObjectMapper {
 		super();
 		configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		//针对timestamp类型的格式化
+		setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 	}
 	
 	@Override

@@ -22,14 +22,15 @@
 	</context:component-scan>
 	
 	<!-- 相当于注册了过时的DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter两个类，@ExceptionHandler似乎对其还有依赖，故依然注册 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven/>
 	
 	<!-- 为了能在Controller层也扫描到aspect,特别配置在此处 -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 	<!-- RequestMappingHandlerMapping 替换过时的DefaultAnnotationHandlerMapping /> -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-	 
-	<beans:bean id="configConverter" class="cn.xglory.service.util.jackson.ConfigConverter" />
 	
+	<!-- 该类的装载过程中设置了自定义的ObjectMapper -->
+	<beans:bean id="configConverter" class="cn.xglory.service.util.jackson.ConfigConverter"/>
+
 </beans>

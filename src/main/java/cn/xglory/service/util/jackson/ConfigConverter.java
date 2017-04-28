@@ -41,6 +41,7 @@ public class ConfigConverter {
         return objectMapper;
     }
     
+    //this autowire will work cause in xml we have a config <annotation-driven />
     @Autowired
     public void setObjectMapper(CustomObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
