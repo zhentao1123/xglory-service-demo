@@ -34,7 +34,7 @@ public class JavaClassCreater implements IJavaClassCreater{
     	VelocityEngine velocityEngine = new VelocityEngine();
     	
     	Properties p = new Properties(); 
-    	//设置输入输出编码类型。和这次说的解决的问题无关
+    	//设置输入输出编码类型。
     	p.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
         p.setProperty(Velocity.INPUT_ENCODING, "UTF-8");  
         p.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");  
