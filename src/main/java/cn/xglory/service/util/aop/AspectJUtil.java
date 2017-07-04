@@ -14,6 +14,7 @@ public class AspectJUtil {
 	 * @param clazz
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Annotation> T  getMethodAnnotation(JoinPoint jp, Class<T> clazz) {
 		 
 		Method method = null;

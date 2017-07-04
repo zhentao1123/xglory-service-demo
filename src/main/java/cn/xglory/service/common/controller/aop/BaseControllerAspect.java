@@ -228,6 +228,7 @@ public class BaseControllerAspect {
 	 * @param parameterTypes 可选的匹配方法参数
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private Method getClassMethod(Class clazz, String methodName, Class annotation, Class... parameterTypes){
 		Method method = null;
 		try{
