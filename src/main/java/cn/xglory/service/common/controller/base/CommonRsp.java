@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import cn.xglory.service.common.bean.BaseBean;
 import cn.xglory.service.common.exception.BaseServiceException;
 import cn.xglory.service.util.jackson.JsonUtil;
 

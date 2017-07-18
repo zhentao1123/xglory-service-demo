@@ -1,4 +1,4 @@
-package cn.xglory.service.common.controller.base;
+package cn.xglory.service.common.bean;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

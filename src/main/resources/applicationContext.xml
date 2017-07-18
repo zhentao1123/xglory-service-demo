@@ -23,6 +23,8 @@
 	<!-- AOP -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
+	<!-- Redis -->
+	
 	<!-- SpringUtils -->
 	<bean class="cn.xglory.service.util.spring.SpringUtils" />
 	
@@ -71,6 +73,19 @@
 			<property name="username" value="${jdbc.username_write}" />
 			<property name="password" value="${jdbc.password_write}" />
 		</bean> 
+		<!-- redis --> 
+		<bean name="db0" class="cn.xglory.service.common.cache.redis.RedisOperator" destroy-method="preDestroy">
+			<constructor-arg name="host" value="${redis.host}" />
+			<constructor-arg name="port" value="${redis.post}" />
+			<constructor-arg name="password" value="${redis.password}" />
+			<constructor-arg name="database" value="0" />
+		</bean>
+		<bean name="db1" class="cn.xglory.service.common.cache.redis.RedisOperator" destroy-method="preDestroy">
+			<constructor-arg name="host" value="${redis.host}" />
+			<constructor-arg name="port" value="${redis.post}" />
+			<constructor-arg name="password" value="${redis.password}" />
+			<constructor-arg name="database" value="1" />
+		</bean>
 	</beans>
 	
 	<!-- Simulate环境 -->
@@ -91,7 +106,20 @@
 			<property name="url" value="${jdbc.url_write}" />
 			<property name="username" value="${jdbc.username_write}" />
 			<property name="password" value="${jdbc.password_write}" />
-		</bean> 
+		</bean>
+		<!-- redis --> 
+		<bean name="db0" class="cn.xglory.service.common.cache.redis.RedisOperator" destroy-method="preDestroy">
+			<constructor-arg name="host" value="${redis.host}" />
+			<constructor-arg name="port" value="${redis.post}" />
+			<constructor-arg name="password" value="${redis.password}" />
+			<constructor-arg name="database" value="0" />
+		</bean>
+		<bean name="db1" class="cn.xglory.service.common.cache.redis.RedisOperator" destroy-method="preDestroy">
+			<constructor-arg name="host" value="${redis.host}" />
+			<constructor-arg name="port" value="${redis.post}" />
+			<constructor-arg name="password" value="${redis.password}" />
+			<constructor-arg name="database" value="1" />
+		</bean>
 	</beans>
 	
 </beans>

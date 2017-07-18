@@ -1,5 +1,7 @@
 package cn.xglory.service.common.controller.base;
 
+import cn.xglory.service.common.bean.BaseBean;
+
 /**
  * 通用请求类
  * @author Bob
