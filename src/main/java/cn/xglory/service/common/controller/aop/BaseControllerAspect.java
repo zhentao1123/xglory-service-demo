@@ -181,7 +181,7 @@ public class BaseControllerAspect {
 			}
 			
 			rsp = new CommonRsp<Object>();
-			rsp.setData(result);;
+			rsp.setData(result);
 			rsp.init4Succeed();
 			
 		} catch (Throwable e) {
