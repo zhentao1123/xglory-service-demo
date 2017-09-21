@@ -1,20 +1,17 @@
 package cn.xglory.service.demo.entity;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import cn.xglory.service.common.dao.entitydao.BaseEntity;
 import cn.xglory.service.common.dao.entitydao.annotation.Column;
 import cn.xglory.service.common.dao.entitydao.annotation.Table;
 
-import java.math.BigInteger;
-import java.lang.String;
-import java.lang.Integer;
-import java.sql.Date;
-import java.sql.Timestamp;
-
 @Table(name="user")
 public class User extends BaseEntity{
 
-	@Column(comment="ID", field="id", pk=true, type="bigint", length="20", require=true)
-	private BigInteger id;
+	@Column(comment="ID", field="id", pk=true, type="int", length="20", require=true)
+	private Integer id;
 	
 	@Column(comment="å§“å", field="name", type="varchar", length="20")
 	private String name;
@@ -28,14 +25,15 @@ public class User extends BaseEntity{
 	@Column(comment="åˆ›å»ºæ—¥æœŸ", field="sys_create_date", type="", length="")
 	private Timestamp sys_create_date;
 	
-	public void setId(BigInteger id){
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public BigInteger getId(){
-		return this.id;
-	}
-	
+
 	public void setName(String name){
 		this.name = name;
 	}
