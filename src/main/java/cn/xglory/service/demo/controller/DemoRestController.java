@@ -17,4 +17,5 @@ public class DemoRestController {
         user.setName("Tom");  
         return user;  
     }  
+	
 }
