@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface EntityDao<E extends BaseEntity> {
 	
-	public E getEntityById(int id) throws Exception;
+	public E getEntityById(Object id) throws Exception;
 	
 	public E getEntityByUuid(String uuid) throws Exception;
 	
@@ -14,7 +14,7 @@ public interface EntityDao<E extends BaseEntity> {
 	
 	public void updateEntity(E entity) throws Exception;
 	
-	public void deleteEntityById(int id) throws Exception;
+	public void deleteEntityById(Object id) throws Exception;
 	
 	public void deleteEntityByUuid(String uuid) throws Exception;
 	

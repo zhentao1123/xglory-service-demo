@@ -15,7 +15,7 @@ import cn.xglory.service.common.dao.entitydao.classbuilder.bean.EntityValue;
 
 public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements EntityDao<E>{
 	
-	public E getEntityById(int id) throws Exception {
+	public E getEntityById(Object id) throws Exception {
 		String sql = "SELECT * FROM `" + getTableName() + "` WHERE id = ?;";
 //System.out.println("Select Sql:"+sql);
 		return queryObject(sql, getEntityClass(), id);
@@ -67,7 +67,7 @@ public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements Enti
 		update(sql, values);
 	}
 
-	public void deleteEntityById(int id) throws Exception {
+	public void deleteEntityById(Object id) throws Exception {
 		String sql = "DELETE FROM `" + getTableName() + "` WHERE id = ?;";
 		update(sql, id);
 	}
@@ -180,15 +180,6 @@ public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements Enti
 			return null;
 		}
 		
-		//移除主键,传入数据已不包含主键
-//		CopyOnWriteArrayList<ColumnInfo> columnInfos_ = new CopyOnWriteArrayList<ColumnInfo>(columnInfos);
-//		for(ColumnInfo columnInfo : columnInfos_) {
-//			if(columnInfo.isPk()){
-//				columnInfos_.remove(columnInfo);
-//			}
-//		}
-//		columnInfos = (List<ColumnInfo>)columnInfos_;
-		
 		String sql = null;
 		StringBuilder sb = new StringBuilder();
 		sb.append("insert into ").append("`"+tableName+"`")
@@ -197,7 +188,7 @@ public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements Enti
 		int i = 1;
 		for(ColumnInfo columnInfo : columnInfos) {
 			if(i > 1){
-				sb.append(" , ");
+				sb.append(" , "); 
 			}
 			sb.append("`"+columnInfo.getField()+"`");
 		    i++;
@@ -231,15 +222,6 @@ public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements Enti
 		if(columnInfos==null || columnInfos.size()==0){
 			return null;
 		}
-		
-		//移除主键，传入数据已不包含主键
-//		CopyOnWriteArrayList<ColumnInfo> columnInfos_ = new CopyOnWriteArrayList<ColumnInfo>(columnInfos);
-//		for(ColumnInfo columnInfo : columnInfos_) {
-//			if(columnInfo.isPk()){
-//				columnInfos_.remove(columnInfo);
-//			}
-//		}
-//		columnInfos = (List<ColumnInfo>)columnInfos_;
 		
 		if(null==idName){
 			idName = "id";
@@ -377,30 +359,27 @@ public class BaseEntityDao<E extends BaseEntity> extends JdbcDao implements Enti
 			if(entityInfoCache.containsKey(className)){
 				return entityInfoCache.get(className);
 			}else{
-				setEntityInfo(className, clazz);
-				return entityInfoCache.get(className);
+				EntityInfo entityInfo = new EntityInfo();
+				entityInfo.setClassName(className);
+				
+				Field[] fields = clazz.getDeclaredFields();
+				if(null != fields){
+					for(Field field : fields)
+					{ 	
+						Column annoColumn = field.getAnnotation(Column.class);
+						FieldInfo fieldInfo = new FieldInfo(field, annoColumn);
+						entityInfo.getFieldsInfo().add(fieldInfo);
+					}
+				}
+				
+				entityInfoCache.putIfAbsent(className, entityInfo);
+				
+				return entityInfoCache.getOrDefault(className, entityInfo);
 			}
 		}
 		
 		public static EntityInfo getEntityInfo(String className){
 			return entityInfoCache.get(className);
-		}
-		
-		public static void setEntityInfo(String className, Class<?> clazz){
-			EntityInfo entityInfo = new EntityInfo();
-			entityInfo.setClassName(className);
-			
-			Field[] fields = clazz.getDeclaredFields();
-			if(null != fields){
-				for(Field field : fields)
-				{ 	
-					Column annoColumn = field.getAnnotation(Column.class);
-					FieldInfo fieldInfo = new FieldInfo(field, annoColumn);
-					entityInfo.getFieldsInfo().add(fieldInfo);
-				}
-			}
-			
-			entityInfoCache.putIfAbsent(className, entityInfo);
 		}
 		
 	}
